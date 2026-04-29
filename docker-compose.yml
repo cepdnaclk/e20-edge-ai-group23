@@ -13,7 +13,7 @@ services:
       - MQTT_PORT=${MQTT_PORT:-1883}
       - MQTT_USERNAME=${MQTT_USERNAME:-}
       - MQTT_PASSWORD=${MQTT_PASSWORD:-}
-      - GROUP_ID=${GROUP_ID:-group13}
+      - GROUP_ID=${GROUP_ID:-group23}
       - PYTHONUNBUFFERED=1
     volumes:
       - ./python:/app

@@ -14,7 +14,7 @@ MQTT_USERNAME = os.getenv("MQTT_USERNAME", "")
 MQTT_PASSWORD = os.getenv("MQTT_PASSWORD", "")
 
 # ── Identity ───────────────────────────────────────────────────────────────────
-GROUP_ID   = os.getenv("GROUP_ID",   "group13")
+GROUP_ID   = os.getenv("GROUP_ID",   "group23")
 PROJECT_ID = os.getenv("PROJECT_ID", "batch-reactor")
 
 # ── MQTT Topics ────────────────────────────────────────────────────────────────

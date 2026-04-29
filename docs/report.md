@@ -7,7 +7,7 @@
 **Course**: SDGP / Edge AI IoT Lab  
 **Group**: Group 13  
 **Date**: April 2026  
-**Repository**: https://github.com/\<username\>/edge-ai-group13
+**Repository**: https://github.com/\<username\>/edge-ai-group23
 
 ---
 
@@ -70,9 +70,9 @@ Three distinct MQTT topics carry different information streams:
 
 | Topic | Purpose | QoS |
 |-------|---------|-----|
-| `sensors/group13/batch-reactor/data` | Raw sensor readings every 2 s | 1 |
-| `alerts/group13/batch-reactor/status` | Anomaly alert (retained) | 1 |
-| `sensors/group13/batch-reactor/stats` | Per-batch energy summary | 1 |
+| `sensors/group23/batch-reactor/data` | Raw sensor readings every 2 s | 1 |
+| `alerts/group23/batch-reactor/status` | Anomaly alert (retained) | 1 |
+| `sensors/group23/batch-reactor/stats` | Per-batch energy summary | 1 |
 
 ### 2.2 Docker Composition
 
@@ -262,7 +262,7 @@ Node-RED Dashboard (`http://localhost:1880/ui`) is organised into two tabs:
 
 ## 7. Alert Integration
 
-Alerts are published to `alerts/group13/batch-reactor/status` with `retain=True`. The payload includes:
+Alerts are published to `alerts/group23/batch-reactor/status` with `retain=True`. The payload includes:
 
 - `anomaly_type` — CRITICAL / WARNING
 - `rule_reason` — human-readable explanation

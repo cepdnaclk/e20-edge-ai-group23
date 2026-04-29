@@ -59,9 +59,9 @@ The system uses a **two-layer detection approach**:
 │         │    HiveMQ Public Broker          │               │
 │         │  broker.hivemq.com:1883          │               │
 │         │                                  │               │
-│         │  sensors/group13/batch-reactor/data     │         │
-│         │  alerts/group13/batch-reactor/status    │         │
-│         │  sensors/group13/batch-reactor/stats    │         │
+│         │  sensors/group23/batch-reactor/data     │         │
+│         │  alerts/group23/batch-reactor/status    │         │
+│         │  sensors/group23/batch-reactor/stats    │         │
 │         └──────────────┬───────────────────┘               │
 └───────────────────────│─────────────────────────────────────┘
                         │ MQTT Subscribe
@@ -94,8 +94,8 @@ The system uses a **two-layer detection approach**:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<username>/edge-ai-group13.git
-cd edge-ai-group13
+git clone https://github.com/<username>/edge-ai-group23.git
+cd edge-ai-group23
 
 # 2. Configure the broker (edit if instructor provides a different one)
 cp .env.example .env
@@ -136,9 +136,9 @@ python main.py
 
 | Topic | Direction | Content |
 |-------|-----------|---------|
-| `sensors/group13/batch-reactor/data` | Publish | Raw sensor reading (JSON) |
-| `alerts/group13/batch-reactor/status` | Publish | Anomaly alert details (JSON) |
-| `sensors/group13/batch-reactor/stats` | Publish | Per-batch energy summary (JSON) |
+| `sensors/group23/batch-reactor/data` | Publish | Raw sensor reading (JSON) |
+| `alerts/group23/batch-reactor/status` | Publish | Anomaly alert details (JSON) |
+| `sensors/group23/batch-reactor/stats` | Publish | Per-batch energy summary (JSON) |
 
 ### Sensor Data Payload Example
 ```json
@@ -153,7 +153,7 @@ python main.py
   "flow_rate_lpm":   15.0,
   "energy_kwh":      4.1833,
   "anomaly_injected": false,
-  "group":           "group13",
+  "group":           "group23",
   "project":         "batch-reactor"
 }
 ```
@@ -172,7 +172,7 @@ python main.py
   "batch_energy": 72.4,
   "temperature":  88.1,
   "pressure":     4.2,
-  "group":        "group13",
+  "group":        "group23",
   "project":      "batch-reactor"
 }
 ```
