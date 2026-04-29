@@ -13,12 +13,9 @@
 
 | Name | Student ID | Role |
 |------|-----------|------|
-| *Member 1* | *ID* | Edge AI / Python |
-| *Member 2* | *ID* | MQTT / Integration |
-| *Member 3* | *ID* | Node-RED / Dashboard |
-| *Member 4* | *ID* | Documentation / Testing |
-
----
+| 1 | *ID* | Edge AI / Python |
+| 2 | *ID* | MQTT / Integration & Testing |
+| 3 | *ID* | Node-RED / Dashboard & Documentation |
 
 ## 📋 Project Description
 
