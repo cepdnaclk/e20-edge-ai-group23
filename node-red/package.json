@@ -1,0 +1,8 @@
+{
+  "name": "batch-reactor-nodered",
+  "version": "1.0.0",
+  "description": "Node-RED flows for Batch Reactor Cycle Anomaly Detection",
+  "dependencies": {
+    "node-red-dashboard": "^2.30.0"
+  }
+}
