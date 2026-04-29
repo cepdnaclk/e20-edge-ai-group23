@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  # ── Edge AI Python Service ──────────────────────────────────────────────────
+  edge-ai:
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    container_name: batch_reactor_edge_ai
+    restart: unless-stopped
+    environment:
+      - MQTT_BROKER=${MQTT_BROKER:-broker.hivemq.com}
+      - MQTT_PORT=${MQTT_PORT:-1883}
+      - MQTT_USERNAME=${MQTT_USERNAME:-}
+      - MQTT_PASSWORD=${MQTT_PASSWORD:-}
+      - GROUP_ID=${GROUP_ID:-group13}
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./python:/app
+      - ./logs:/app/logs
+    networks:
+      - iot-network
+    depends_on: []
+
+  # ── Node-RED Dashboard ──────────────────────────────────────────────────────
+  node-red:
+    build:
+      context: ./node-red
+      dockerfile: Dockerfile
+    container_name: batch_reactor_nodered
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Colombo
+      - NODE_RED_CREDENTIAL_SECRET=${NODE_RED_CREDENTIAL_SECRET:-mysecret}
+    ports:
+      - "1880:1880"
+    volumes:
+      - node-red-data:/data
+      - ./node-red/flows.json:/data/flows.json
+      - ./node-red/settings.js:/data/settings.js
+    networks:
+      - iot-network
+
+volumes:
+  node-red-data:
+
+networks:
+  iot-network:
+    driver: bridge
