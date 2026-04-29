@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# Logs
+logs/
+*.log
+
+# Docker volumes
+node-red-data/
+
+# Environment secrets
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Models (large binary files — store with Git LFS if needed)
+python/models/*.tflite
+python/models/*.pkl
