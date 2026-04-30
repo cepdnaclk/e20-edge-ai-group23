@@ -13,6 +13,7 @@ import os
 import sys
 import threading
 import time
+import signal
 from dataclasses import asdict
 
 # Allow running without Docker
@@ -153,13 +154,21 @@ def stats_thread(stats_client: MQTTClient):
 # ── Entry point ────────────────────────────────────────────────────────────────
 
 def main():
+    # --- Graceful Shutdown Handler for Docker ---
+    def sigterm_handler(sig, frame):
+        logger.info("🚨 SIGTERM received from Docker. Initiating graceful shutdown...")
+        raise KeyboardInterrupt  # Routes the signal to existing cleanup block!
+    
+    signal.signal(signal.SIGTERM, sigterm_handler)
+    # --------------------------------------------
+
     logger.info("=" * 60)
     logger.info("Batch Reactor Cycle Anomaly Detection – Edge AI System")
-    logger.info("Group   : %s", config.GROUP_ID)
-    logger.info("Broker  : %s:%d", config.MQTT_BROKER, config.MQTT_PORT)
-    logger.info("Data    : %s", config.TOPIC_DATA)
-    logger.info("Alerts  : %s", config.TOPIC_ALERT)
-    logger.info("Stats   : %s", config.TOPIC_STATS)
+    logger.info("Group  : %s", config.GROUP_ID)
+    logger.info("Broker : %s:%d", config.MQTT_BROKER, config.MQTT_PORT)
+    logger.info("Data   : %s", config.TOPIC_DATA)
+    logger.info("Alerts : %s", config.TOPIC_ALERT)
+    logger.info("Stats  : %s", config.TOPIC_STATS)
     logger.info("=" * 60)
 
     # Create three separate MQTT clients (paho is not thread-safe for a single client)
@@ -174,9 +183,9 @@ def main():
             sys.exit(1)
 
     threads = [
-        threading.Thread(target=publisher_thread,    args=(pub_client,),                 daemon=True, name="Publisher"),
+        threading.Thread(target=publisher_thread,    args=(pub_client,),                daemon=True, name="Publisher"),
         threading.Thread(target=ai_processor_thread, args=(sub_client, alert_client),    daemon=True, name="AIProcessor"),
-        threading.Thread(target=stats_thread,         args=(stats_client,),               daemon=True, name="Stats"),
+        threading.Thread(target=stats_thread,        args=(stats_client,),              daemon=True, name="Stats"),
     ]
 
     for t in threads:
@@ -186,13 +195,17 @@ def main():
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
-        logger.info("Shutdown signal received.")
+        # --- This is where the sigterm_handler routes the shutdown command! ---
+        logger.info("Shutdown signal received. Stopping threads...")
         _stop_event.set()
         for t in threads:
             t.join(timeout=5)
+            
+        logger.info("Disconnecting from MQTT broker...")
         for c in (pub_client, sub_client, alert_client, stats_client):
             c.disconnect()
-        logger.info("System shut down cleanly.")
+            
+        logger.info("✅ Edge AI Service shut down cleanly.")
 
 
 if __name__ == "__main__":
