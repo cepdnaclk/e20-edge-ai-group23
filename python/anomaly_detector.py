@@ -71,7 +71,7 @@ class AnomalyDetector:
             reading.get("pressure_bar",   0.0),
             reading.get("power_kw",       0.0),
             reading.get("flow_rate_lpm",  0.0),
-            reading.get("energy_kwh",     0.0),
+            #reading.get("energy_kwh",     0.0),
         ], dtype=float)
 
     # ── Rule-based layer ───────────────────────────────────────────────────────

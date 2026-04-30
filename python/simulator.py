@@ -85,7 +85,7 @@ class BatchReactorSimulator:
     def _maybe_inject_anomaly(self):
         """Randomly decide what anomaly (if any) to inject in this batch."""
         roll = random.random()
-        if roll < 0.80:                          # 80 % of batches are anomalous
+        if roll < 0.20:                          # 80 % of batches are anomalous
             self._anomaly_type = random.choice([
                 "energy_spike",
                 "energy_sag",

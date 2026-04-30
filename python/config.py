@@ -31,9 +31,9 @@ READINGS_PER_BATCH       = BATCH_DURATION_SEC // PUBLISH_INTERVAL_SEC
 ENERGY_BASELINE_KWH      = 45.0    # expected energy per batch (kWh)
 ENERGY_UPPER_THRESHOLD   = 60.0    # > this → HIGH anomaly
 ENERGY_LOWER_THRESHOLD   = 30.0    # < this → LOW anomaly
-TEMPERATURE_MAX_C        = 95.0    # max safe reactor temp
+TEMPERATURE_MAX_C        = 100.0    # max safe reactor temp
 PRESSURE_MAX_BAR         = 6.0     # max safe pressure
-ISOLATION_CONTAMINATION  = 0.35    # Isolation Forest contamination rate
+ISOLATION_CONTAMINATION  = 0.05    # Isolation Forest contamination rate
 
 # ── Logging ────────────────────────────────────────────────────────────────────
 LOG_FILE = "logs/edge_ai.log"
