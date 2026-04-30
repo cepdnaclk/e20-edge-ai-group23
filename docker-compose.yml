@@ -36,6 +36,11 @@ services:
       - "1880:1880"
     volumes:
       - node-red-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:1880/ui"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     networks:
       - iot-network
 
