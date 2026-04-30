@@ -49,7 +49,7 @@ def generate_dataset(n_batches: int):
             r.pressure_bar,
             r.power_kw,
             r.flow_rate_lpm,
-            r.energy_kwh,
+            #r.energy_kwh,
         ])
         labels.append(1 if r.anomaly_injected else 0)
 

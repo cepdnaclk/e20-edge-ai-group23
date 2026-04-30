@@ -33,7 +33,7 @@ ENERGY_UPPER_THRESHOLD   = 60.0    # > this → HIGH anomaly
 ENERGY_LOWER_THRESHOLD   = 30.0    # < this → LOW anomaly
 TEMPERATURE_MAX_C        = 100.0    # max safe reactor temp
 PRESSURE_MAX_BAR         = 6.0     # max safe pressure
-ISOLATION_CONTAMINATION  = 0.35    # Isolation Forest contamination rate
+ISOLATION_CONTAMINATION  = 0.05    # Isolation Forest contamination rate
 
 # ── Logging ────────────────────────────────────────────────────────────────────
 LOG_FILE = "logs/edge_ai.log"
