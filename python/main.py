@@ -14,6 +14,7 @@ import sys
 import threading
 import time
 import signal
+import csv
 from dataclasses import asdict
 
 # Allow running without Docker
@@ -53,13 +54,35 @@ def publisher_thread(pub_client: MQTTClient):
     )
     logger.info("Publisher thread started.")
 
-    while not _stop_event.is_set():
-        reading  = sim.next_reading()
-        payload  = reading.to_dict()
-        payload["group"]   = config.GROUP_ID
-        payload["project"] = config.PROJECT_ID
-        pub_client.publish(config.TOPIC_DATA, payload)
-        _stop_event.wait(timeout=config.PUBLISH_INTERVAL_SEC)
+    # --- Open the CSV file for appending ---
+    csv_path = "logs/local_historian.csv"
+    with open(csv_path, mode="a", newline="") as file:
+        writer = csv.writer(file)
+        
+        # Write the header row ONLY if the file is completely empty
+        if file.tell() == 0:
+            writer.writerow(["timestamp", "batch_id", "phase", "temperature", "pressure", "power"])
+
+        while not _stop_event.is_set():
+            reading  = sim.next_reading()
+            payload  = reading.to_dict()
+            payload["group"]   = config.GROUP_ID
+            payload["project"] = config.PROJECT_ID
+            
+            # --- Save to CSV before publishing ---
+            writer.writerow([
+                payload["timestamp"], 
+                payload.get("batch_id", 0), 
+                payload.get("cycle_phase", "UNKNOWN"), 
+                payload.get("temperature", 0.0), 
+                payload.get("pressure", 0.0), 
+                payload.get("power_draw", 0.0)
+            ])
+            file.flush() # Force to save to the hard drive immediately
+            # -----------------------------------------------
+
+            pub_client.publish(config.TOPIC_DATA, payload)
+            _stop_event.wait(timeout=config.PUBLISH_INTERVAL_SEC)
 
     logger.info("Publisher thread stopped.")
 
